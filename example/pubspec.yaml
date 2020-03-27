@@ -1,3 +1,4 @@
+version: 1.0.0+1
 name: flutter_webview_plugin_example
 description: Demonstrates how to use the flutter_webview_plugin plugin.
 

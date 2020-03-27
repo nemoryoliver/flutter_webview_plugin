@@ -7,7 +7,7 @@ import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 const kAndroidUserAgent =
     'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Mobile Safari/537.36';
 
-String selectedUrl = 'https://flutter.io';
+String selectedUrl = 'https://facebook.com';
 
 // ignore: prefer_collection_literals
 final Set<JavascriptChannel> jsChannels = [
@@ -266,6 +266,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 final future =
                     flutterWebViewPlugin.evalJavascript(_codeCtrl.text);
                 future.then((String result) {
+                  print("eval: $result");
+
                   setState(() {
                     _history.add('eval: $result');
                   });
@@ -283,14 +285,24 @@ class _MyHomePageState extends State<MyHomePage> {
               child: const Text('Close'),
             ),
             RaisedButton(
-              onPressed: () {
-                flutterWebViewPlugin.getCookies().then((m) {
-                  setState(() {
-                    _history.add('cookies: $m');
-                  });
-                });
+              onPressed: () async {
+                print('getting cookies...');
+
+                final cookies = await flutterWebViewPlugin.getCookies();
+
+                print('cookies: $cookies');
               },
               child: const Text('Cookies'),
+            ),
+            RaisedButton(
+              onPressed: () async {
+                print('getting all cookies...');
+
+                final cookies = await flutterWebViewPlugin.getAllCookies(selectedUrl);
+
+                print('all cookies: $cookies');
+              },
+              child: const Text('All Cookies'),
             ),
             Text(_history.join('\n'))
           ],

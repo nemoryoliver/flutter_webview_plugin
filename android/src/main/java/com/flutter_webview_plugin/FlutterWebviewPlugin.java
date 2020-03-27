@@ -85,6 +85,9 @@ public class FlutterWebviewPlugin implements MethodCallHandler, PluginRegistry.A
             case "cleanCookies":
                 cleanCookies(call, result);
                 break;
+            case "getAllCookies":
+                getAllCookies(call,result);
+                break;
             case "canGoBack":
                 canGoBack(result);
                 break;
@@ -296,6 +299,12 @@ public class FlutterWebviewPlugin implements MethodCallHandler, PluginRegistry.A
             webViewManager.show(call, result);
         }
         result.success(null);
+    }
+
+    private void getAllCookies(MethodCall call, final MethodChannel.Result result){
+        if (webViewManager != null){
+            webViewManager.getAllCookies(call,result);
+        }
     }
 
     private void cleanCookies(MethodCall call, final MethodChannel.Result result) {

@@ -334,6 +334,13 @@ class WebviewManager {
         return EMPTY;
     }
 
+    void getAllCookies(MethodCall call, final MethodChannel.Result result){
+        String url = call.argument("url");
+        CookieManager cookieManager = CookieManager.getInstance();
+        String cookieStr = cookieManager.getCookie(url);
+        result.success(cookieStr);
+    }
+
     private void clearCookies() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             CookieManager.getInstance().removeAllCookies(new ValueCallback<Boolean>() {
