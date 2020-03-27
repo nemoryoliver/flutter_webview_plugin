@@ -304,6 +304,16 @@ class _MyHomePageState extends State<MyHomePage> {
               },
               child: const Text('All Cookies'),
             ),
+            RaisedButton(
+              onPressed: () async {
+                print('setting cookie...');
+
+                await flutterWebViewPlugin.setCookie(selectedUrl, 'custom_xxxx=custom_xxxx;');
+
+                print('done setting cookie');
+              },
+              child: const Text('Set Cookie'),
+            ),
             Text(_history.join('\n'))
           ],
         ),

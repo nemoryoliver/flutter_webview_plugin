@@ -8,6 +8,7 @@ import android.content.Context;
 import android.net.http.SslError;
 import android.os.Build;
 import android.os.Handler;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -339,6 +340,17 @@ class WebviewManager {
         CookieManager cookieManager = CookieManager.getInstance();
         String cookieStr = cookieManager.getCookie(url);
         result.success(cookieStr);
+    }
+
+    void setCookie(MethodCall call, final MethodChannel.Result result){
+        String url = call.argument("url");
+        String cookie = call.argument("cookie");
+
+        Log.d("COOKIE", "url: " + url + ", cookie: " + cookie);
+
+        CookieManager cookieManager = CookieManager.getInstance();
+        cookieManager.setCookie(url, cookie);
+        result.success("");
     }
 
     private void clearCookies() {

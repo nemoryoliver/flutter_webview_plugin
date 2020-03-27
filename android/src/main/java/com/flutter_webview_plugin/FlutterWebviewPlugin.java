@@ -88,6 +88,9 @@ public class FlutterWebviewPlugin implements MethodCallHandler, PluginRegistry.A
             case "getAllCookies":
                 getAllCookies(call,result);
                 break;
+            case "setCookie":
+                setCookie(call,result);
+                break;
             case "canGoBack":
                 canGoBack(result);
                 break;
@@ -304,6 +307,12 @@ public class FlutterWebviewPlugin implements MethodCallHandler, PluginRegistry.A
     private void getAllCookies(MethodCall call, final MethodChannel.Result result){
         if (webViewManager != null){
             webViewManager.getAllCookies(call,result);
+        }
+    }
+
+    private void setCookie(MethodCall call, final MethodChannel.Result result){
+        if (webViewManager != null){
+            webViewManager.setCookie(call, result);
         }
     }
 

@@ -301,6 +301,12 @@ class FlutterWebviewPlugin {
     return res;
   }
 
+  /// Set Cookie
+  Future<void> setCookie(String url, String cookie) async {
+    final res = await _channel.invokeMethod('setCookie', {'url': url, 'cookie': cookie});
+    return res;
+  }
+
   Future<Map<String, String>> getCookies() async {
     final cookiesString = await evalJavascript('document.cookie');
     final cookies = <String, String>{};
