@@ -64,8 +64,8 @@ static NSString *const CHANNEL_NAME = @"flutter_webview_plugin";
         result(nil);
     } else if ([@"cleanCookies" isEqualToString:call.method]) {
         [self cleanCookies:result];
-    } else if ([@"cleanCookiesForUrl" isEqualToString:call.method]) {
-        [self cleanCookiesForUrl:result];
+    } else if ([@"cleanCookiesForFacebook" isEqualToString:call.method]) {
+        [self cleanCookiesForFacebook:result];
     } else if ([@"getAllCookies" isEqualToString:call.method]){
           [self getAllCookies:call completionHandler:^(NSString *cookies) {
                 result(cookies);
@@ -333,7 +333,7 @@ static NSString *const CHANNEL_NAME = @"flutter_webview_plugin";
                   removeDataOfTypes:record.dataTypes
                   forDataRecords:@[record]
                   completionHandler:^{
-                    NSLog(@"Cookies for %@ deleted successfully",record.displayName);
+//                    NSLog(@"Cookies for %@ deleted successfully",record.displayName);
                     result(nil);
                   }
               ];
