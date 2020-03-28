@@ -68,6 +68,10 @@ static NSString *const CHANNEL_NAME = @"flutter_webview_plugin";
           [self getAllCookies:call completionHandler:^(NSString *cookies) {
                 result(cookies);
             }];
+    } else if ([@"getUrl" isEqualToString:call.method]){
+          [self getUrl:call completionHandler:^(NSString *url) {
+                result(url);
+            }];
     } else if ([@"back" isEqualToString:call.method]) {
         [self back];
         result(nil);
@@ -279,6 +283,15 @@ static NSString *const CHANNEL_NAME = @"flutter_webview_plugin";
         }
         
         [self.webview loadRequest:request];
+    }
+}
+
+- (void)getUrl:(FlutterMethodCall*)call
+     completionHandler:(void (^_Nullable)(NSString * url))completionHandler {
+    if (self.webview != nil) {
+        completionHandler([NSString stringWithFormat:@"%@", self.webview.URL]);
+    } else {
+        completionHandler(nil);
     }
 }
 

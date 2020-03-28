@@ -296,6 +296,12 @@ class FlutterWebviewPlugin {
   }
 
   /// Get AllCookies
+  Future<String> getUrl() async {
+    final res = await _channel.invokeMethod('getUrl', null);
+    return res;
+  }
+
+  /// Get AllCookies
   Future<String> getAllCookies(String url) async {
     final res = await _channel.invokeMethod('getAllCookies', {'url': url});
     return res;

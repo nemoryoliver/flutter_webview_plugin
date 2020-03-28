@@ -335,6 +335,10 @@ class WebviewManager {
         return EMPTY;
     }
 
+    void getUrl(MethodCall call, final MethodChannel.Result result){
+        result.success(webView.getUrl());
+    }
+
     void getAllCookies(MethodCall call, final MethodChannel.Result result){
         String url = call.argument("url");
         CookieManager cookieManager = CookieManager.getInstance();

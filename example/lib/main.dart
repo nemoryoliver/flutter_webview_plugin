@@ -133,6 +133,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     // Add a listener to on destroy WebView, so you can make came actions.
     _onDestroy = flutterWebViewPlugin.onDestroy.listen((_) {
+      print('_onDestroy');
       if (mounted) {
         // Actions like show a info toast.
         _scaffoldKey.currentState.showSnackBar(
@@ -142,6 +143,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     // Add a listener to on url changed
     _onUrlChanged = flutterWebViewPlugin.onUrlChanged.listen((String url) {
+      print('_onUrlChanged: $url');
       if (mounted) {
         setState(() {
           _history.add('onUrlChanged: $url');
@@ -151,6 +153,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     _onProgressChanged =
         flutterWebViewPlugin.onProgressChanged.listen((double progress) {
+          print('onProgressChanged: $progress');
       if (mounted) {
         setState(() {
           _history.add('onProgressChanged: $progress');
@@ -178,6 +181,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     _onStateChanged =
         flutterWebViewPlugin.onStateChanged.listen((WebViewStateChanged state) {
+          print('onStateChanged: ${state.type}');
       if (mounted) {
         setState(() {
           _history.add('onStateChanged: ${state.type} ${state.url}');
@@ -314,7 +318,16 @@ class _MyHomePageState extends State<MyHomePage> {
               },
               child: const Text('Set Cookie'),
             ),
-            Text(_history.join('\n'))
+            RaisedButton(
+              onPressed: () async {
+                print('getting url...');
+
+                final url = await flutterWebViewPlugin.getUrl();
+
+                print('current url: $url');
+              },
+              child: const Text('Get Url'),
+            ),
           ],
         ),
       ),
