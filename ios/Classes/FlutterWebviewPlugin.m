@@ -64,6 +64,8 @@ static NSString *const CHANNEL_NAME = @"flutter_webview_plugin";
         result(nil);
     } else if ([@"cleanCookies" isEqualToString:call.method]) {
         [self cleanCookies:result];
+    } else if ([@"cleanCookiesForUrl" isEqualToString:call.method]) {
+        [self cleanCookiesForUrl:result];
     } else if ([@"getAllCookies" isEqualToString:call.method]){
           [self getAllCookies:call completionHandler:^(NSString *cookies) {
                 result(cookies);
@@ -312,6 +314,36 @@ static NSString *const CHANNEL_NAME = @"flutter_webview_plugin";
         }];
     } else {
         completionHandler(nil);
+    }
+}
+
+- (void)cleanCookiesForFacebook:(FlutterResult)result {
+    [[NSURLSession sharedSession] resetWithCompletionHandler:^{
+    }];
+    
+    if (@available(iOS 9.0, *)) {
+     WKWebsiteDataStore *dateStore = [WKWebsiteDataStore defaultDataStore];
+        
+     [dateStore
+        fetchDataRecordsOfTypes:[WKWebsiteDataStore allWebsiteDataTypes]
+        completionHandler:^(NSArray<WKWebsiteDataRecord *> * __nonnull records) {
+          for (WKWebsiteDataRecord *record  in records) {
+            if ( [record.displayName containsString:@"facebook"]) {
+              [[WKWebsiteDataStore defaultDataStore]
+                  removeDataOfTypes:record.dataTypes
+                  forDataRecords:@[record]
+                  completionHandler:^{
+                    NSLog(@"Cookies for %@ deleted successfully",record.displayName);
+                    result(nil);
+                  }
+              ];
+            }
+          }
+        }
+      ];
+    } else {
+      // support for iOS8 tracked in https://github.com/flutter/flutter/issues/27624.
+      NSLog(@"Clearing cookies is not supported for Flutter WebViews prior to iOS 9.");
     }
 }
 

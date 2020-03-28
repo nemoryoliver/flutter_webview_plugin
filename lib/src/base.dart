@@ -295,13 +295,19 @@ class FlutterWebviewPlugin {
     _instance = null;
   }
 
-  /// Get AllCookies
+  /// Get current URL
+  Future<void> cleanCookiesForFacebook() async {
+    final res = await _channel.invokeMethod('cleanCookiesForFacebook', null);
+    return res;
+  }
+
+  /// Get current URL
   Future<String> getUrl() async {
     final res = await _channel.invokeMethod('getUrl', null);
     return res;
   }
 
-  /// Get AllCookies
+  /// Get all Cookies
   Future<String> getAllCookies(String url) async {
     final res = await _channel.invokeMethod('getAllCookies', {'url': url});
     return res;

@@ -328,6 +328,22 @@ class _MyHomePageState extends State<MyHomePage> {
               },
               child: const Text('Get Url'),
             ),
+            RaisedButton(
+              onPressed: () async {
+                print('old cleaning cookies...');
+
+                await flutterWebViewPlugin.cleanCookies();
+              },
+              child: const Text('Old Clean Cookies'),
+            ),
+            RaisedButton(
+              onPressed: () async {
+                print('new cleaning cookies...');
+
+                await flutterWebViewPlugin.cleanCookiesForFacebook();
+              },
+              child: const Text('New Clean Cookies'),
+            ),
           ],
         ),
       ),
